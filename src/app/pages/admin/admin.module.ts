@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { AdminRoutingModule } from './admin-routing.module';
+import { AdminIndexComponent } from './admin-index/admin-index.component';
+import { AdminCreateUpdateComponent } from './admin-create-update/admin-create-update.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AdminIndexComponent,
+    AdminCreateUpdateComponent
+  ],
   imports: [
     CommonModule,
+    Ng2SmartTableModule,
     AdminRoutingModule
   ]
 })
