@@ -5,7 +5,6 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
   declarations: [
     PagesComponent
@@ -13,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     HttpClientModule,
-    PagesRoutingModule
-  ]
+    PagesRoutingModule,
+  ],
 })
 export class PagesModule { }

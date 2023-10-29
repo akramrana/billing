@@ -5,15 +5,19 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminIndexComponent } from './admin-index/admin-index.component';
 import { AdminCreateUpdateComponent } from './admin-create-update/admin-create-update.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ControlMessagesComponent } from '../control-messages/control-messages.component';
 
 
 @NgModule({
   declarations: [
     AdminIndexComponent,
-    AdminCreateUpdateComponent
+    AdminCreateUpdateComponent,
+    ControlMessagesComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     Ng2SmartTableModule,
     AdminRoutingModule
   ]

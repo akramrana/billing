@@ -1,1 +1,77 @@
-<p>admin-create-update works!</p>
+<div class="row card highlight-card card-small text-center ms-0 me-0">
+    <span>Create Admin</span>
+</div>
+
+<form [formGroup]="adminForm" (ngSubmit)="save($event)">
+    <div class="row">
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Name</label>
+
+                <input type="text" nbInput fullWidth class="form-control text-input" name="name" formControlName="name"
+                    placeholder="">
+
+                <ngx-control-messages [control]="adminForm.get('name')" [fieldName]="'Name'"></ngx-control-messages>
+
+            </div>
+        </div>
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Email</label>
+                <input type="email" nbInput fullWidth class="form-control text-input" name="email"
+                    formControlName="email" placeholder="">
+
+                <ngx-control-messages [control]="adminForm.get('email')" [fieldName]="'Email'"></ngx-control-messages>
+
+                <small class="text-danger" *ngIf="adminForm.controls['email'].hasError('dupicateEmail')">
+                    Admin with this email already exist!
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12 col-lg-6">
+            <div class="form-group {{(id) ? '' : 'required'}}">
+                <label class="control-label">Password</label>
+                <input type="password" nbInput fullWidth class="form-control text-input" name="password"
+                    formControlName="password" placeholder="">
+                <ngx-control-messages [control]="adminForm.get('password')"
+                    [fieldName]="'Password'"></ngx-control-messages>
+            </div>
+        </div>
+
+        <ng-container *ngIf="!id">
+            <div class="col-12 col-lg-6">
+                <div class="form-group required">
+                    <label class="control-label">Confirm Password</label>
+                    <input type="password" nbInput fullWidth class="form-control text-input" name="confirmPassword"
+                        formControlName="confirmPassword" placeholder="">
+                    <ngx-control-messages [control]="adminForm.get('confirmPassword')" [fieldName]="'Confirm Password'">
+                    </ngx-control-messages>
+
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+
+    <div class="row mt-2">
+
+        <div class="col-12 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label"> Phone </label>
+                <input formControlName="phone" type="text" class="form-control" id="phone" name="phone" />
+                <ngx-control-messages [control]="adminForm.get('phone')" [fieldName]="'Phone'"></ngx-control-messages>
+                <small class="text-danger" *ngIf="adminForm.controls['phone'].hasError('pattern')">Invalid Phone</small>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+        <div class="form-group col-12">
+            <button type="submit" class="btn btn-success">
+                Save
+            </button>
+        </div>
+    </div>
+</form>

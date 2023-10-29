@@ -18,7 +18,7 @@ export class AdminIndexComponent implements OnInit,AfterViewInit {
   pageSize = 20;
   pageNumber = 1;
   totalRecords = 0;
-  listUrl = environment.apiurl + 'admin/index';
+  listUrl = environment.apiurl + 'v1/admin.php?_route=index';
   totalRows = 0;
   currentRows = 0;
 
@@ -30,12 +30,12 @@ export class AdminIndexComponent implements OnInit,AfterViewInit {
     actions: {
       custom: [
         {
-          name: 'editAction',
-          title: '<i class="nb-edit" title="Edit"></i>',
+          name: 'deleteAction',
+          title: '<i class="fa fa-trash text-danger" title="delete"></i>',
         },
         {
-          name: 'deleteAction',
-          title: '<i class="nb-trash" title="delete"></i>',
+          name: 'editAction',
+          title: '<i class="fa fa-edit m-2" title="Edit"></i>',
         },
       ],
       add: false,
