@@ -56,7 +56,8 @@ export class AdminCreateUpdateComponent implements OnInit {
     })
       .pipe(first())
       .subscribe(response => {
-        const _data = response.body.data;
+        const _data = response.body;
+        //console.log(_data);
         if (_data) {
           this.admin = _data;
           this.adminForm.patchValue({

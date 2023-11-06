@@ -39,8 +39,8 @@ export class ApiService {
       }));
   }
 
-  deleteRequest(route: string, id: number, getParams?: any) {
-    return this.configService.deleteRequest(route + id, getParams)
+  deleteRequest(route: string, getParams?: any) {
+    return this.configService.deleteRequest(route, getParams)
       .pipe(map(response => {
         return response;
       }));

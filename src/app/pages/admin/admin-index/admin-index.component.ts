@@ -6,13 +6,13 @@ import { Ng2SmartTableComponent, ServerDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
-
+import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-admin-index',
   templateUrl: './admin-index.component.html',
   styleUrls: ['./admin-index.component.scss']
 })
-export class AdminIndexComponent implements OnInit,AfterViewInit {
+export class AdminIndexComponent implements OnInit, AfterViewInit {
 
   source: ServerDataSource | any;
   pageSize = 20;
@@ -24,6 +24,8 @@ export class AdminIndexComponent implements OnInit,AfterViewInit {
 
   @ViewChild('table')
   smartTable: Ng2SmartTableComponent | any;
+
+  private baseRoute = 'v1/admin.php';
 
   settings = {
     hideSubHeader: false,
@@ -73,7 +75,7 @@ export class AdminIndexComponent implements OnInit,AfterViewInit {
     private _domSanitizer: DomSanitizer,
     private titleService: Title,
     private route: ActivatedRoute
-  ) { 
+  ) {
     this.titleService.setTitle('Admin');
   }
 
@@ -86,18 +88,18 @@ export class AdminIndexComponent implements OnInit,AfterViewInit {
           this.settings.pager.page = this.pageNumber;
         }
       }
-    );
+      );
     this.source = this.getData();
-    this.source.onChanged().subscribe((change:any) => {
+    this.source.onChanged().subscribe((change: any) => {
       if (change.action === 'page') {
         this.pageNumber = change.paging.page;
-         this.router.navigate([], { 
+        this.router.navigate([], {
           relativeTo: this.route,
           queryParams: {
             page: this.pageNumber,
           },
           queryParamsHandling: 'merge',
-         });
+        });
       }
     });
   }
@@ -110,13 +112,29 @@ export class AdminIndexComponent implements OnInit,AfterViewInit {
     this.smartTable.custom.subscribe((dataObject: any) => {
       // console.log(dataObject);
       if (dataObject.action === 'editAction') {
-        this.router.navigate(['/pages/admin/update/' + dataObject.data.id],{ queryParams: { indexPage:this.pageNumber} });
+        this.router.navigate(['/pages/admin/update/' + dataObject.data.id], { queryParams: { indexPage: this.pageNumber } });
       } else if (dataObject.action === 'deleteAction') {
         if (window.confirm('Are you sure you want to delete?')) {
-          
+          this.delete(dataObject.data.id)
         }
       }
     });
+  }
+
+  delete(id: number): void {
+    this.apiService.deleteRequest(this.baseRoute, {
+      id: id,
+      _route: 'delete'
+    })
+      .pipe(first())
+      .subscribe(response => {
+        if (response.body.status === 1) {
+          this.toastrService.success('Admin deleted successfully!');
+          this.source = this.getData();
+        } else {
+          this.toastrService.error('Something went wrong. Please try again later!');
+        }
+      });
   }
 
 }
