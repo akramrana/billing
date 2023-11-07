@@ -7,12 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     PagesRoutingModule,
-  ],
+  ]
 })
 export class PagesModule { }

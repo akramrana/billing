@@ -22,10 +22,6 @@ const routes: Routes = [
     path: 'update/:id',
     component: AdminCreateUpdateComponent,
   },
-  {
-    path: 'delete/:id',
-    component: AdminCreateUpdateComponent,
-  },
 ];
 
 @NgModule({

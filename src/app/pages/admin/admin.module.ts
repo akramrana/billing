@@ -6,6 +6,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminIndexComponent } from './admin-index/admin-index.component';
 import { AdminCreateUpdateComponent } from './admin-create-update/admin-create-update.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 import { ControlMessagesComponent } from '../control-messages/control-messages.component';
 
 
@@ -13,10 +14,9 @@ import { ControlMessagesComponent } from '../control-messages/control-messages.c
   declarations: [
     AdminIndexComponent,
     AdminCreateUpdateComponent,
-    ControlMessagesComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     ReactiveFormsModule,
     Ng2SmartTableModule,
     AdminRoutingModule
