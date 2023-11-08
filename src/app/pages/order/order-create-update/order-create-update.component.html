@@ -1,0 +1,104 @@
+<div class="row card highlight-card card-small text-center ms-0 me-0">
+    <span>{{title}} Business</span>
+</div>
+
+<form [formGroup]="formGroup" (ngSubmit)="save($event)">
+    <div class="row">
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Order Number</label>
+
+                <input type="text" nbInput fullWidth class="form-control text-input" name="orderNumber"
+                    formControlName="orderNumber" placeholder="" readonly>
+
+                <ngx-control-messages [control]="formGroup.get('orderNumber')"
+                    [fieldName]="'Order number'"></ngx-control-messages>
+
+            </div>
+        </div>
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Business</label>
+
+                <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="businessId"
+                    formControlName="businessId">
+                    <ng-option [value]="row.id" *ngFor="let row of businessList">
+                        {{row.name}}
+                    </ng-option>
+                </ng-select>
+
+                <ngx-control-messages [control]="formGroup.get('businessId')"
+                    [fieldName]="'Business'"></ngx-control-messages>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <td colspan="7">
+                            <a (click)="addItems()" href="javascript:;" class="btn btn-primary"> Add Item</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Description</th>
+                        <th>Colour</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Regular Price</th>
+                        <th>Final Price</th>
+                    </tr>
+                </thead>
+                <!-- {{log(sizeList)}} -->
+                <tbody formArrayName="itemsArray">
+                    <tr *ngFor="let row of valueFormGroup.controls; let ix=index" [formGroupName]="ix">
+                        <th>
+                            <a (click)="removeItem(ix)" href="javascript:;" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        </th>
+                        <td>
+                            <textarea class="form-control" name="message" formControlName="message"></textarea>
+                        </td>
+                        <td>
+                            <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="colourId"
+                                formControlName="colourId">
+                                <ng-option [value]="row.id" *ngFor="let row of colourList">
+                                    {{row.name}}
+                                </ng-option>
+                            </ng-select>
+                        </td>
+                        <td>
+                            <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="sizeId"
+                                formControlName="sizeId">
+                                <ng-option [value]="row.id" *ngFor="let row of sizeList">
+                                    {{row.name}}
+                                </ng-option>
+                            </ng-select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="quantity" formControlName="quantity"/>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="regularPrice" formControlName="regularPrice"/>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="finalPrice" formControlName="finalPrice"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="form-group col-12">
+            <button type="submit" class="btn btn-success">
+                Save
+            </button>
+        </div>
+    </div>
+</form>
