@@ -37,7 +37,6 @@ export class OrderCreateUpdateComponent implements OnInit {
     this.getBusinessList();
     this.getColourList();
     this.getSizeList();
-    this.getNextOrderNumber();
     this.title = 'Create';
     this.formGroup = this.fb.group({
       orderNumber: ['', Validators.required],
@@ -53,6 +52,8 @@ export class OrderCreateUpdateComponent implements OnInit {
     if (this.id) {
       this.title = 'Update';
       this.getUpdateData();
+    } else {
+      this.getNextOrderNumber();
     }
   }
 
@@ -76,7 +77,7 @@ export class OrderCreateUpdateComponent implements OnInit {
     this.arrayItems.push(items);
   }
 
-  removeItem(i: number){
+  removeItem(i: number) {
     if (this.arrayItems.length > 0) {
       this.arrayItems.removeAt(i);
     }
@@ -96,7 +97,7 @@ export class OrderCreateUpdateComponent implements OnInit {
       });
   }
 
-  getSizeList() {    
+  getSizeList() {
     this.sizeList = [];
     this.apiService.readRequest(this.dropdownRoute, {
       _route: "size-list"
@@ -127,7 +128,7 @@ export class OrderCreateUpdateComponent implements OnInit {
       });
   }
 
-  getColourList() {   
+  getColourList() {
     this.colourList = [];
     this.apiService.readRequest(this.dropdownRoute, {
       _route: "colour-list"
