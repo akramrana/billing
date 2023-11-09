@@ -1,0 +1,63 @@
+<div class="row card highlight-card card-small text-center ms-0 me-0">
+    <span>{{title}} Payment</span>
+</div>
+
+<form [formGroup]="formGroup" (ngSubmit)="save($event)">
+    <div class="row">
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Order</label>
+
+                <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="orderId"
+                    formControlName="orderId">
+                    <ng-option [value]="row.id" *ngFor="let row of orderList">
+                        {{row.name}}
+                    </ng-option>
+                </ng-select>
+
+                <ngx-control-messages [control]="formGroup.get('orderId')"
+                    [fieldName]="'Order'"></ngx-control-messages>
+
+            </div>
+        </div>
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Paymode</label>
+
+                <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="paymode"
+                    formControlName="paymode">
+                    <ng-option [value]="row.id" *ngFor="let row of paymodeList">
+                        {{row.name}}
+                    </ng-option>
+                </ng-select>
+
+                <ngx-control-messages [control]="formGroup.get('paymode')"
+                    [fieldName]="'Paymode'"></ngx-control-messages>
+
+
+            </div>
+        </div>
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Amount</label>
+
+                <input type="number" nbInput fullWidth class="form-control text-input" name="amount"
+                    formControlName="amount" placeholder=""/>
+
+                
+
+                <ngx-control-messages [control]="formGroup.get('amount')"
+                    [fieldName]="'Amount'"></ngx-control-messages>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="form-group col-12">
+            <button type="submit" class="btn btn-success">
+                Save
+            </button>
+        </div>
+    </div>
+</form>
