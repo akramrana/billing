@@ -25,7 +25,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     Ng2SmartTableModule,
     NgSelectModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
   ]
 })
 export class OrderModule { }
