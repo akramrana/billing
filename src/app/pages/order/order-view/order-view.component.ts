@@ -262,9 +262,9 @@ export class OrderViewComponent implements OnInit {
                   border: [false, false, false, false]
                 },
                 {
-                  text: '',
+                  text: `Business Email:${this.order.email}`,
                   fontSize: 11,
-                  alignment: 'left',
+                  alignment: 'right',
                   margin: [0, 0, 0, 0],
                   border: [false, false, false, false]
                 },
@@ -288,9 +288,9 @@ export class OrderViewComponent implements OnInit {
                   border: [false, false, false, false]
                 },
                 {
-                  text: '',
+                  text: `Business Phone:${this.order.phone}`,
                   fontSize: 11,
-                  alignment: 'left',
+                  alignment: 'right',
                   margin: [0, 0, 0, 0],
                   border: [false, false, false, false]
                 },
@@ -314,9 +314,9 @@ export class OrderViewComponent implements OnInit {
                   border: [false, false, false, false]
                 },
                 {
-                  text: '',
+                  text: 'Business Address: ',
                   fontSize: 11,
-                  alignment: 'left',
+                  alignment: 'right',
                   margin: [0, 0, 0, 0],
                   border: [false, false, false, false]
                 },
