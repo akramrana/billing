@@ -33,6 +33,20 @@
 
             </div>
         </div>
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Delivery Date</label>
+
+                <input type="text" nbInput fullWidth class="form-control text-input" name="deliveryTime"
+                    formControlName="deliveryTime" placeholder="" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
+
+                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+
+                <ngx-control-messages [control]="formGroup.get('deliveryTime')"
+                    [fieldName]="'Delivery Date'"></ngx-control-messages>
+
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -58,7 +72,9 @@
                 <tbody formArrayName="itemsArray">
                     <tr *ngFor="let row of valueFormGroup.controls; let ix=index" [formGroupName]="ix">
                         <th>
-                            <a (click)="removeItem(ix)" href="javascript:;" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            <a (click)="removeItem(ix)" href="javascript:;" class="text text-danger">
+                                <b><i class="fa fa-trash"></i></b>
+                            </a>
                         </th>
                         <td>
                             <textarea class="form-control" name="message" formControlName="message"></textarea>
@@ -80,13 +96,14 @@
                             </ng-select>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="quantity" formControlName="quantity"/>
+                            <input type="number" class="form-control" name="quantity" formControlName="quantity" />
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="regularPrice" formControlName="regularPrice"/>
+                            <input type="number" class="form-control" name="regularPrice"
+                                formControlName="regularPrice" />
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="finalPrice" formControlName="finalPrice"/>
+                            <input type="number" class="form-control" name="finalPrice" formControlName="finalPrice" />
                         </td>
                     </tr>
                 </tbody>

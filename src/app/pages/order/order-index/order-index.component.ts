@@ -39,6 +39,10 @@ export class OrderIndexComponent implements OnInit {
           name: 'editAction',
           title: '<i class="fa fa-edit m-2" title="Edit"></i>',
         },
+        {
+          name: 'viewAction',
+          title: '<i class="fa fa-search" title="View"></i>',
+        },
       ],
       add: false,
       edit: false,
@@ -121,7 +125,11 @@ export class OrderIndexComponent implements OnInit {
       // console.log(dataObject);
       if (dataObject.action === 'editAction') {
         this.router.navigate(['/pages/order/update/' + dataObject.data.id], { queryParams: { indexPage: this.pageNumber } });
-      } else if (dataObject.action === 'deleteAction') {
+      } 
+      else if (dataObject.action === 'viewAction') {
+        this.router.navigate(['/pages/order/view/' + dataObject.data.id], { queryParams: { indexPage: this.pageNumber } });
+      } 
+      else if (dataObject.action === 'deleteAction') {
         if (window.confirm('Are you sure you want to delete?')) {
           this.delete(dataObject.data.id)
         }

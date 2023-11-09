@@ -41,6 +41,7 @@ export class OrderCreateUpdateComponent implements OnInit {
     this.formGroup = this.fb.group({
       orderNumber: ['', Validators.required],
       businessId: ['', [Validators.required]],
+      deliveryTime: [''],
       itemsArray: this.fb.array([]),
     });
 
@@ -150,12 +151,27 @@ export class OrderCreateUpdateComponent implements OnInit {
       .pipe(first())
       .subscribe(response => {
         const _data = response.body;
+        //console.log(_data);
         if (_data) {
           this.order = _data;
           this.formGroup.patchValue({
-            orderNumber: this.order.orderNumber,
-            businessId: this.order.businessId,
+            orderNumber: this.order.order_number,
+            businessId: this.order.business_id,
+            deliveryTime: this.order.delivery_time,
           });
+          if(this.order.items && this.order.items.length > 0){
+            for(let oi of this.order.items){
+              let items = this.fb.group({
+                colourId: [oi.colour_id],
+                sizeId: [oi.size_id],
+                finalPrice: [oi.price],
+                regularPrice: [oi.regular_price],
+                quantity: [oi.quantity],
+                message: [oi.message],
+              })
+              this.arrayItems.push(items);
+            }
+          }
         }
       });
   }
@@ -167,7 +183,11 @@ export class OrderCreateUpdateComponent implements OnInit {
     });
     if (this.formGroup.valid) {
       try {
+        let months = this.months();
         const postParams = this.formGroup.value;
+        let deliveryTime = new Date(postParams.deliveryTime);
+        postParams['deliveryTime'] = months[deliveryTime.getMonth()] + ' ' + deliveryTime.getDate() + ' ' + deliveryTime.getFullYear();
+        //
         if (this.id === 0) {
           this.apiService.postRequest(this.baseRoute, { _route: "create" }, postParams)
             .pipe(first())
@@ -196,6 +216,13 @@ export class OrderCreateUpdateComponent implements OnInit {
         console.log(e);
       }
     }
+  }
+
+  months() {
+    let months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return months;
   }
 
 }

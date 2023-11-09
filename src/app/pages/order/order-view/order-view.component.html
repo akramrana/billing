@@ -1,1 +1,68 @@
-<p>order-view works!</p>
+<div class="row card highlight-card card-small text-center ms-0 me-0">
+    <span>{{title}} Order #{{order?.order_number}}</span>
+</div>
+
+
+    <div class="row">
+        <div class="col-12 col-lg-12 text-center">
+            <a href="javascript:;" class="btn btn-warning text text-white">Print</a>
+        </div>
+        <div class="col-12 col-lg-12">
+            <table class="table table-bordered mt-2">
+                <tbody>
+                    <tr>
+                        <th>Order Number</th>
+                        <td>#{{order?.order_number}}</td>
+                    </tr>
+                    <tr>
+                        <th>Business</th>
+                        <td>{{order?.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Date</th>
+                        <td>{{order?.delivery_time}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Colour</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Regular Price</th>
+                        <th>Final Price</th>
+                    </tr>
+                </thead>
+                <!-- {{log(sizeList)}} -->
+                <tbody>
+                    <tr *ngFor="let row of order?.items">
+                        <td>
+                            {{row.message}}
+                        </td>
+                        <td>
+                            {{row.colour_name}}
+                        </td>
+                        <td>
+                            {{row.size_name}}
+                        </td>
+                        <td>
+                            {{row.quantity}}
+                        </td>
+                        <td>
+                            {{row.regular_price}}
+                        </td>
+                        <td>
+                            {{row.price}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
