@@ -45,6 +45,8 @@ export class MyHttpInterceptor implements HttpInterceptor {
           if (err.status !== 401) {
             return;
           }
+          this.configSettings.removeLoginUserData();
+          this.router.navigate(['/auth/login']);
         }
       }),
         finalize(() => {
