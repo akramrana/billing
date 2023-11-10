@@ -1,4 +1,4 @@
-let url = 'http://billing.codxplore.com/api/';
+let url = 'http://websites.codxplore.com/global/api/';
 export const environment = {
   production: true,
   apiurl: url,
