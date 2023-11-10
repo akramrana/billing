@@ -4,9 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthGuard } from './providers/auth.guard';
+import { MyHttpInterceptor } from './interceptors/MyHttpInterceptor';
 @NgModule({
   declarations: [
     AppComponent
@@ -21,6 +22,11 @@ import { AuthGuard } from './providers/auth.guard';
   ],
   providers: [
     AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyHttpInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

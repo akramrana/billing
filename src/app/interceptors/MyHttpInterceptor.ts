@@ -3,7 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse
 import { ConfigSettings } from '../config/config.settings';
 import { Router } from '@angular/router';
 import { finalize, tap } from 'rxjs/operators';
-import CryptoJS from 'crypto-js'
+import * as CryptoJS from 'crypto-js'
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -22,8 +22,11 @@ export class MyHttpInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const secret = this.getHeaderKey();
+    const currentUser = JSON.parse(this.configSettings.getLoginUserData());
+    const token = (currentUser && currentUser.token) ? currentUser.token : "";
+    //
     let authReq: any = req.clone({
-      headers: req.headers.set('secret', secret).set('Access-Control-Allow-Origin', '*')
+      headers: req.headers.set('secret', secret).set('token',token).set('Access-Control-Allow-Origin', '*')
     });
     let displayLoadingScreen = true;
     for (const skippUrl of this.skippUrls) {
@@ -61,10 +64,11 @@ export class MyHttpInterceptor implements HttpInterceptor {
     const timeStamp = new Date(d + 30000).toISOString();
     const authType = 'cms';
     const key = timeStamp + '###' + authType;
+    //console.log(this.aesEncrypt(key));
     return this.aesEncrypt(key);
   }
 
-  aesEncrypt(data) {
+  aesEncrypt(data: any) {
     let iv = environment.IV;
     let key = environment.ENC_KEY;
     let cipher = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(key), {
