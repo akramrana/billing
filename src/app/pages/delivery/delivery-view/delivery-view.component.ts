@@ -1,26 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { first } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
+import { first } from 'rxjs/operators';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 @Component({
-  selector: 'app-order-view',
-  templateUrl: './order-view.component.html',
-  styleUrls: ['./order-view.component.scss']
+  selector: 'app-delivery-view',
+  templateUrl: './delivery-view.component.html',
+  styleUrls: ['./delivery-view.component.scss']
 })
-export class OrderViewComponent implements OnInit {
+export class DeliveryViewComponent implements OnInit {
 
   id: number = 0;
   title: string = "";
-  formGroup: FormGroup | any;
-  order: any;
-  private baseRoute = 'v1/order.php';
-  private dropdownRoute = 'v1/dropdown.php';
-  statusList: any[] = [];
+  delivery: any;
+  private baseRoute = 'v1/delivery.php';
   orderTotal: number = 0;
 
   constructor(
@@ -32,33 +29,13 @@ export class OrderViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getStatus();
     this.title = 'View';
     this._route.params.subscribe((param) => {
       this.id = (param['id']) ? param['id'] : 0;
     });
     if (this.id) {
       this.getViewData();
-      this.formGroup = this.fb.group({
-        orderId: [this.id],
-        statusId: [null, Validators.required],
-        comment: [],
-      });
     }
-  }
-
-  getStatus() {
-    this.statusList = [];
-    this.apiService.readRequest(this.dropdownRoute, {
-      _route: "status-list"
-    })
-      .pipe(first())
-      .subscribe(response => {
-        const _data = response.body;
-        if (_data) {
-          this.statusList = _data;
-        }
-      });
   }
 
   getViewData() {
@@ -71,38 +48,9 @@ export class OrderViewComponent implements OnInit {
         const _data = response.body;
         //console.log(_data);
         if (_data) {
-          this.order = _data;
+          this.delivery = _data;
         }
       });
-  }
-
-  changeStatus($event: any) {
-    Object.keys(this.formGroup.controls).forEach(field => {
-      const control = this.formGroup.get(field);
-      control.markAsTouched({ onlySelf: true });
-    });
-    if (this.formGroup.valid) {
-      try {
-        const postParams = this.formGroup.value;
-        //console.log(postParams);
-        this.apiService.postRequest(this.baseRoute, { _route: 'change-status' }, postParams)
-          .pipe(first())
-          .subscribe(response => {
-            if (response.status === 1) {
-              this.toastrService.success('Status updated successfully!');
-              this.formGroup.patchValue({
-                statusId: "",
-                comment: ""
-              });
-              this.getViewData();
-            } else if (response.status === 0) {
-              this.toastrService.error(response.message);
-            }
-          });
-      } catch (e) {
-        // console.log(e);
-      }
-    }
   }
 
   printInvoice() {
@@ -111,8 +59,8 @@ export class OrderViewComponent implements OnInit {
     // orderInfo
     orderItemData.push([
       {
-        text: 'Order Summary',
-        colSpan: 7,
+        text: 'Delivery Summary',
+        colSpan: 9,
         fontSize: 14,
         bold: true,
         style: {
@@ -127,11 +75,15 @@ export class OrderViewComponent implements OnInit {
       {},
       {},
       {},
+      {},
+      {},
     ])
 
     orderItemData.push([
       { text: 'Sr.', alignment: 'center', bold: true, fontSize: 11, style: { color: '#353935' } },
       { text: 'Description', alignment: 'left', bold: true, fontSize: 11, style: { color: '#353935' } },
+      { text: 'Date', alignment: 'left', bold: true, fontSize: 11, style: { color: '#353935' } },
+      { text: 'Order Number', alignment: 'left', bold: true, fontSize: 11, style: { color: '#353935' } },
       { text: 'Color', alignment: 'left', bold: true, fontSize: 11, style: { color: '#353935' } },
       { text: 'Size', alignment: 'left', bold: true, fontSize: 11, style: { color: '#353935' } },
       { text: 'Qty.', alignment: 'center', bold: true, fontSize: 11, color: '#353935' },
@@ -141,19 +93,21 @@ export class OrderViewComponent implements OnInit {
     //
     let i = 0;
     let total: number = 0;
-    for (let orderItem of this.order?.items) {
-      //console.log(orderItem?.price);
-      //console.log(orderItem?.quantity);
+    for (let orderItem of this.delivery?.items) {
       i = i + 1;
       total += Number(orderItem.price) * Number(orderItem.quantity);
-      let itemTtl: number = Number(orderItem?.price) * Number(orderItem?.quantity);
+      let itemTtl: any = Number(orderItem?.price) * Number(orderItem?.quantity);
       let colourName = orderItem?.colour_name;
       let sizeName = orderItem?.size_name;
       let qtyStr = 'x' + orderItem?.quantity;
       let msg = orderItem.message;
+      let datetime = orderItem.datetime;
+      let order_number = orderItem.order_number;
       orderItemData.push([
         { text: i, alignment: 'center', fontSize: 11, style: { color: '#353935' } },
         { text: msg, alignment: 'left', fontSize: 11, style: { color: '#353935' } },
+        { text: datetime, alignment: 'left', fontSize: 11, style: { color: '#353935' } },
+        { text: order_number, alignment: 'left', fontSize: 11, style: { color: '#353935' } },
         { text: colourName, alignment: 'left', fontSize: 11, style: { color: '#353935' } },
         { text: sizeName, alignment: 'left', fontSize: 11, style: { color: '#353935' } },
         { text: qtyStr, fontSize: 11, color: '#353935' },
@@ -200,7 +154,7 @@ export class OrderViewComponent implements OnInit {
                 },
                 {},
                 {
-                  text: `Invoice Number. : ${this.order.order_number}`,
+                  text: `Delivery Number. : ${this.delivery.delivery_number}`,
                   color: "#28282B",
                   alignment: 'right',
                   margin: [0, 15, 0, 0],
@@ -229,7 +183,7 @@ export class OrderViewComponent implements OnInit {
             body: [
               [
                 {
-                  text: 'Order Statement',
+                  text: 'Delivery Statement',
                   colSpan: 3,
                   fontSize: 14,
                   bold: true,
@@ -245,7 +199,7 @@ export class OrderViewComponent implements OnInit {
               ],
               [
                 {
-                  text: `Business Name: ${this.order.name}`,
+                  text: `Delivery Man: ${this.delivery.delivery_man}`,
                   bold: true,
                   fontSize: 11,
                   style: {
@@ -262,7 +216,7 @@ export class OrderViewComponent implements OnInit {
                   border: [false, false, false, false]
                 },
                 {
-                  text: `Business Email:${this.order.email}`,
+                  text: ``,
                   fontSize: 11,
                   alignment: 'right',
                   margin: [0, 0, 0, 0],
@@ -271,7 +225,7 @@ export class OrderViewComponent implements OnInit {
               ],
               [
                 {
-                  text: `Creation Date: ${this.order.created_at}`,
+                  text: `Creation Date: ${this.delivery.created_at}`,
                   bold: true,
                   fontSize: 11,
                   style: {
@@ -288,7 +242,7 @@ export class OrderViewComponent implements OnInit {
                   border: [false, false, false, false]
                 },
                 {
-                  text: `Business Phone:${this.order.phone}`,
+                  text: ``,
                   fontSize: 11,
                   alignment: 'right',
                   margin: [0, 0, 0, 0],
@@ -297,7 +251,7 @@ export class OrderViewComponent implements OnInit {
               ],
               [
                 {
-                  text: `Delivery Date: ${this.order.delivery_time}`,
+                  text: ``,
                   bold: true,
                   fontSize: 11,
                   style: {
@@ -314,7 +268,7 @@ export class OrderViewComponent implements OnInit {
                   border: [false, false, false, false]
                 },
                 {
-                  text: 'Business Address: ',
+                  text: '',
                   fontSize: 11,
                   alignment: 'right',
                   margin: [0, 0, 0, 0],
@@ -329,7 +283,7 @@ export class OrderViewComponent implements OnInit {
           alignment: 'center',
           margin: [0, 5, 0, 5],
           table: {
-            widths: [30, 130, 60, 53, 60, 65, 55],
+            widths: [30, 65, 60, 58, 40, 35, 35, 55, 55],
             headerRows: 1,
             body: orderItemData
           },
@@ -470,5 +424,6 @@ export class OrderViewComponent implements OnInit {
     };
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition).open();
   }
+
 
 }

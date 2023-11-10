@@ -1,0 +1,112 @@
+<div class="row card highlight-card card-small text-center ms-0 me-0">
+    <span>{{title}} Delivery</span>
+</div>
+
+<form [formGroup]="formGroup" (ngSubmit)="save($event)">
+    <div class="row">
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Delivery Number</label>
+
+                <input type="text" nbInput fullWidth class="form-control text-input" name="deliveryNumber"
+                    formControlName="deliveryNumber" placeholder="" readonly>
+
+                <ngx-control-messages [control]="formGroup.get('deliveryNumber')"
+                    [fieldName]="'Delivery number'"></ngx-control-messages>
+
+            </div>
+        </div>
+        <div class="col-6 col-lg-6">
+            <div class="form-group required">
+                <label class="control-label">Delivery Man</label>
+
+                <input type="text" nbInput fullWidth class="form-control text-input" name="deliveryMan"
+                    formControlName="deliveryMan" placeholder=""/>
+
+                <ngx-control-messages [control]="formGroup.get('deliveryMan')"
+                    [fieldName]="'Delivery Man'"></ngx-control-messages>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <td colspan="7">
+                            <a (click)="addItems()" href="javascript:;" class="btn btn-primary"> Add Item</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Description</th>
+                        <th>Colour</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Order <small>**if any</small></th>
+                    </tr>
+                </thead>
+                <!-- {{log(sizeList)}} -->
+                <tbody formArrayName="itemsArray">
+                    <tr *ngFor="let row of valueFormGroup.controls; let ix=index" [formGroupName]="ix">
+                        <th>
+                            <a (click)="removeItem(ix)" href="javascript:;" class="text text-danger">
+                                <b><i class="fa fa-trash"></i></b>
+                            </a>
+                        </th>
+                        <td>
+                            <textarea class="form-control" name="message" formControlName="message"></textarea>
+                        </td>
+                        <td>
+                            <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="colourId"
+                                formControlName="colourId">
+                                <ng-option [value]="row.id" *ngFor="let row of colourList">
+                                    {{row.name}}
+                                </ng-option>
+                            </ng-select>
+                        </td>
+                        <td>
+                            <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="sizeId"
+                                formControlName="sizeId">
+                                <ng-option [value]="row.id" *ngFor="let row of sizeList">
+                                    {{row.name}}
+                                </ng-option>
+                            </ng-select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="quantity" formControlName="quantity" />
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="price"
+                                formControlName="price" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="date" formControlName="date" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"/>
+                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                        </td>
+                        <td>
+                            <ng-select bindLabel="name" bindValue="id" placeholder="Please Select" name="orderId"
+                                formControlName="orderId">
+                                <ng-option [value]="row.id" *ngFor="let row of orderList">
+                                    {{row.name}}
+                                </ng-option>
+                            </ng-select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="form-group col-12">
+            <button type="submit" class="btn btn-success">
+                Save
+            </button>
+        </div>
+    </div>
+</form>

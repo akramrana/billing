@@ -1,0 +1,82 @@
+<div class="row card highlight-card card-small text-center ms-0 me-0">
+    <span>{{title}} Delivery #{{delivery?.delivery_number}}</span>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-12 text-center">
+        <button class="btn btn-warning text text-white" (click)="printInvoice()">Print</button>
+    </div>
+</div>
+<div id="print-section">
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="text-center">Delivery Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Delivery Number</th>
+                        <td>#{{delivery?.delivery_number}}</td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Man</th>
+                        <td>{{delivery?.delivery_man}}</td>
+                    </tr>
+                    <tr>
+                        <th>Creation Date</th>
+                        <td>{{delivery?.created_at}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <th colspan="7" class="text-center">Items</th>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <th>Colour</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Delivery Date</th>
+                        <th>Order Number <small>**if any</small></th>
+                    </tr>
+                </thead>
+                <!-- {{log(sizeList)}} -->
+                <tbody>
+                    <tr *ngFor="let row of delivery?.items">
+                        <td>
+                            {{row.message}}
+                        </td>
+                        <td>
+                            {{row.colour_name}}
+                        </td>
+                        <td>
+                            {{row.size_name}}
+                        </td>
+                        <td>
+                            {{row.quantity}}
+                        </td>
+                        <td>
+                            {{row.price}}
+                        </td>
+                        <td>
+                            {{row.datetime}}
+                        </td>
+                        <td>
+                            {{row.order_number}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
