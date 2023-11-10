@@ -13,6 +13,18 @@ export class ConfigSettings {
   ) {
   }
 
+  setLoginUserData(user: any) {
+    localStorage.setItem('_billing_userdetail', JSON.stringify(user));
+  }
+
+  getLoginUserData(): any {
+    return localStorage.getItem('_billing_userdetail');
+  }
+
+  removeLoginUserData(): any {
+    localStorage.removeItem('_billing_userdetail');
+  }
+
 
   getBrowserVersion() {
     let ua = navigator.userAgent, tem,

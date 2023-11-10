@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardIndexComponent } from './dashboard-index/dashboard-index.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardIndexComponent,
+    component: LoginComponent,
     children: [
       {
         path: 'index',
-        component: DashboardIndexComponent,
+        component: LoginComponent,
       },
     ],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];
 
@@ -19,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { }
+export class AuthRoutingModule { }

@@ -1,0 +1,32 @@
+<form [formGroup]="loginForm" (ngSubmit)="login($event)">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="border p-5">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email" formControlName="email" />
+                    <ng-container
+                        *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched && submitted">
+                        <p class="text-danger"
+                            *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors['required']">
+                            Email is required!
+                        </p>
+                    </ng-container>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" formControlName="password" />
+                    <ng-container
+                        *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched && submitted">
+                        <p class="text-danger"
+                            *ngIf="loginForm.controls['password'].errors && loginForm.controls['password'].errors['required']">
+                            Password is required!
+                        </p>
+                    </ng-container>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>

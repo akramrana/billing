@@ -19,7 +19,7 @@
       <div class="col-10">
         <div class="collapse justify-content-end navbar-collapse" [ngClass]="{ 'show': isShown }"
           id="navbarTogglerDemo03">
-          <ul class="navbar-nav mt-2 mt-lg-0">
+          <ul class="navbar-nav mt-2 mt-lg-0" *ngIf="isLoggedIn">
             <li class="nav-item active">
               <a class="nav-link" [routerLink]="['/']">
                 Dashboard
@@ -55,6 +55,11 @@
             <li class="nav-item">
               <a class="nav-link" [routerLink]="['/pages/payment']">
                 Payment
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:;" (click)="onLogout()">
+                Logut <i class="fa-solid fa-lock"></i>
               </a>
             </li>
           </ul>

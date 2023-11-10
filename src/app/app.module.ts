@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthGuard } from './providers/auth.guard';
 @NgModule({
   declarations: [
     AppComponent
@@ -16,9 +17,11 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
     NgbModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
