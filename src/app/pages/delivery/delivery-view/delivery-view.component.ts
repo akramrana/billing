@@ -60,7 +60,7 @@ export class DeliveryViewComponent implements OnInit {
     orderItemData.push([
       {
         text: 'Delivery Summary',
-        colSpan: 9,
+        colSpan: 7,
         fontSize: 14,
         bold: true,
         style: {
@@ -69,8 +69,6 @@ export class DeliveryViewComponent implements OnInit {
         },
         alignment: 'center'
       },
-      {},
-      {},
       {},
       {},
       {},
@@ -87,8 +85,6 @@ export class DeliveryViewComponent implements OnInit {
       { text: 'Color', alignment: 'left', bold: true, fontSize: 11, style: { color: '#353935' } },
       { text: 'Size', alignment: 'left', bold: true, fontSize: 11, style: { color: '#353935' } },
       { text: 'Qty.', alignment: 'center', bold: true, fontSize: 11, color: '#353935' },
-      { text: 'Price', alignment: 'right', bold: true, fontSize: 11, color: '#353935' },
-      { text: 'Total', alignment: 'right', bold: true, fontSize: 11, color: '#353935' }
     ]);
     //
     let i = 0;
@@ -111,8 +107,6 @@ export class DeliveryViewComponent implements OnInit {
         { text: colourName, alignment: 'left', fontSize: 11, style: { color: '#353935' } },
         { text: sizeName, alignment: 'left', fontSize: 11, style: { color: '#353935' } },
         { text: qtyStr, fontSize: 11, color: '#353935' },
-        { text: orderItem?.price, alignment: 'right', fontSize: 11, color: '#353935' },
-        { text: Number(itemTtl).toFixed(3), alignment: 'right', fontSize: 11, color: '#353935' }
       ]);
     }
     this.orderTotal = total;
@@ -283,49 +277,9 @@ export class DeliveryViewComponent implements OnInit {
           alignment: 'center',
           margin: [0, 5, 0, 5],
           table: {
-            widths: [30, 65, 60, 58, 40, 35, 35, 55, 55],
+            widths: [30, 85, 60, 68, 70, 70, 70],
             headerRows: 1,
             body: orderItemData
-          },
-        },
-        {
-          style: 'table',
-          alignment: 'right',
-          margin: [265, 5, 0, 0],
-          table: {
-            widths: [122, 110, 100, 105],
-            headerRows: 1,
-            body: [
-              [
-                {
-                  text: 'Payment Summary',
-                  colSpan: 2,
-                  fontSize: 14,
-                  bold: true,
-                  style: {
-                    fillColor: '#1976d2',
-                    color: '#FFFFFF'
-                  }, alignment: 'center'
-                },
-                {}
-              ],
-              [
-                {
-                  text: 'Subtotal',
-                  bold: true,
-                  fontSize: 11,
-                  style: {
-                    color: '#353935'
-                  },
-                  alignment: 'left'
-                },
-                {
-                  text: this.orderTotal + ' ' + 'BDT',
-                  alignment: 'right',
-                  margin: [0, 0, 0, 0]
-                },
-              ]
-            ],
           },
         },
         {

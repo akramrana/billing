@@ -8,9 +8,11 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthGuard } from './providers/auth.guard';
 import { MyHttpInterceptor } from './interceptors/MyHttpInterceptor';
+import { LoadingScreenComponent } from './pages/loading-screen/loading-screen.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoadingScreenComponent
   ],
   imports: [
     BrowserModule,
