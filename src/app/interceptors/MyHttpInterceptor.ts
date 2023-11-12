@@ -6,6 +6,7 @@ import { finalize, tap } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js'
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { LoadingScreenService } from '../services/loading-screen.service';
 
 @Injectable()
 export class MyHttpInterceptor implements HttpInterceptor {
@@ -18,6 +19,7 @@ export class MyHttpInterceptor implements HttpInterceptor {
   constructor(
     private configSettings: ConfigSettings,
     private router: Router,
+    private loadingScreenService: LoadingScreenService,
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -37,6 +39,7 @@ export class MyHttpInterceptor implements HttpInterceptor {
     }
     if (displayLoadingScreen) {
       if (this.activeRequests === 0) {
+        this.loadingScreenService.startLoading();
       }
       this.activeRequests++;
       return next.handle(authReq).pipe(tap(() => {
@@ -52,6 +55,7 @@ export class MyHttpInterceptor implements HttpInterceptor {
         finalize(() => {
           this.activeRequests--;
           if (this.activeRequests === 0) {
+            this.loadingScreenService.stopLoading();
           }
         })
       )
